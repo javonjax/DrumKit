@@ -1,3 +1,22 @@
+.header {
+    color: #ffc600;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    border: 0.4rem solid black;
+    background: rgba(0, 0, 0, 0.7);
+    font-size: 1.5rem;
+    padding: 1rem; 
+}
+
+.header-container {
+    display: flex;
+    justify-content: center;
+}
+
+html {
+    background-image: url('background.jpg');
+}
+
 kbd {
     display: block;
     font-size: 4rem;
@@ -9,17 +28,24 @@ kbd {
     margin: 1rem;
     font-size: 1.5rem;
     padding: 1rem 0.5rem;
-    transition: all 0.07 ease;
+    transition: all 0.07s ease;
     width: 10rem;
     text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+    text-shadow: 0 0 2px black;
 }
 
-.keys-container {
+.key-container {
     display: flex;
     flex: 1;
     min-height: 100vh;
     align-items: center;
     justify-content: center;
+}
+
+.playing{
+    transform: scale(1.1);
+    border-color: #ffc600;
 }
 
 .sound {

@@ -8,22 +8,15 @@
     height='48' viewBox='0 0 20 20'><text x='0' y='18'>🎓</text></svg>"/>
     <link rel="stylesheet" href="style.css"/>
 </head>
+
 <body>
-    
-    <!--Audio files-->
-    <audio data-key="65" src="sounds/clap.wav"></audio>
-    <audio data-key="83" src="sounds/hihat.wav"></audio>
-    <audio data-key="68" src="sounds/kick.wav"></audio>
-    <audio data-key="70" src="sounds/openhat.wav"></audio>
-    <audio data-key="71" src="sounds/boom.wav"></audio>
-    <audio data-key="72" src="sounds/ride.wav"></audio>
-    <audio data-key="74" src="sounds/snare.wav"></audio>
-    <audio data-key="75" src="sounds/tom.wav"></audio>
-    <audio data-key="76" src="sounds/tink.wav"></audio>
+    <div class="header-container">
+        <h1 class="header">JavaScript DrumKit</h1>
+    </div>
 
     <!--Drum pad keys set
         data-key: ASCII key code for corresponding key-->
-    <div class="keys-container">
+    <div class="key-container">
         <div data-key="65" class="key">
             <kbd>A</kbd>
             <span class="sound">Clap</span>
@@ -63,11 +56,13 @@
     </div>
 
     <script>
-        const eventHandler = (event) => {
+        /*  Event handler for keydown events
+            Plays sound for corresponding key and applies transition style */
+        const playSound = (event) => {
+            // Select the key and audio file for the corresponding key
+            const key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
             const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
-            console.log(audio);
 
-            //
             if(!audio) { 
                 return;
             }
@@ -76,12 +71,43 @@
             audio.volume = 0.2;
             audio.currentTime = 0;
             audio.play();
+
+            // Apply transition style
+            key.classList.add('playing');
+        }
+        
+        /*  Event handler for end of transition
+            Removes style applied for transition */
+        const removeTransition = (event) => {
+            // Only remove transition when the transformation is done
+            if(event.propertyName !== 'transform'){
+                return;
+            }
+
+            // Remove transition style
+            event.target.classList.remove('playing');
         }
 
-        window.addEventListener('keydown', eventHandler);
+        // Get all drumkit keys
+        const allKeys = document.querySelectorAll('.key');
+        
+        // Add event listener for audio on keydown
+        window.addEventListener('keydown', playSound);
 
+        // Add event listener for transition style removal
+        allKeys.forEach((key) => key.addEventListener('transitionend', removeTransition));
     </script>
     
-
+    <!--Audio files-->
+    <audio data-key="65" src="sounds/clap.wav"></audio>
+    <audio data-key="83" src="sounds/hihat.wav"></audio>
+    <audio data-key="68" src="sounds/kick.wav"></audio>
+    <audio data-key="70" src="sounds/openhat.wav"></audio>
+    <audio data-key="71" src="sounds/boom.wav"></audio>
+    <audio data-key="72" src="sounds/ride.wav"></audio>
+    <audio data-key="74" src="sounds/snare.wav"></audio>
+    <audio data-key="75" src="sounds/tom.wav"></audio>
+    <audio data-key="76" src="sounds/tink.wav"></audio>
+    
 </body>
 </html>
